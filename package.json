@@ -9,9 +9,18 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@helia/unixfs": "^3.0.7",
+    "@metamask/sdk-react": "^0.28.4",
+    "@openzeppelin/contracts": "^4.9.3",
+    "axios": "^1.7.7",
+    "blockstore-core": "^5.0.2",
+    "ethers": "^6.13.3",
+    "helia": "^4.2.6",
     "next": "14.2.13",
     "react": "^18",
-    "react-dom": "^18"
+    "react-dom": "^18.3.1",
+    "react-dropzone": "^14.2.3",
+    "web3modal": "^1.9.12"
   },
   "devDependencies": {
     "@nomicfoundation/hardhat-toolbox": "^5.0.0",

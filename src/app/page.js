@@ -1,9 +1,11 @@
-import React from 'react'
+// app/page.js
+import React, { useContext } from 'react'
 
-const page = () => {
+export default function HomePage() {
   return (
-    <div>page</div>
-  )
+      <div>
+          <h1>Welcome to My Next.js App</h1>
+          <p>This is the default home page.</p>
+      </div>
+  );
 }
-
-export default page
