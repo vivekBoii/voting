@@ -14,3 +14,5 @@ npx hardhat ignition deploy ./ignition/modules/Lock.js --network localhost
 ```
 favicon
 timeStamp dekh
+error of voting again
+time funtionality
