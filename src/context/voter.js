@@ -92,7 +92,7 @@ export const VotingProvider = ({ children }) => {
       const voter = await contract.voterRight(address, name, url, fileUrl);
       voter.wait();
       console.log(voter);
-      router.push("/voterList");
+      window.location.href = "/voterList";
     } catch (error) {
       console.log(error);
       setError("Error in creating voter");
@@ -136,7 +136,7 @@ export const VotingProvider = ({ children }) => {
       const contract = fetchContract(signer);
 
       const voterList = await contract.vote(voterAddress, voterId);
-      console.log(voterList);
+      window.location.href = "/";
     } catch (error) {
       console.log(error);
       setError(error);
@@ -176,7 +176,7 @@ export const VotingProvider = ({ children }) => {
       );
       candidate.wait();
       console.log(candidate);
-      router.push("/");
+      window.location.href = "/";
     } catch (error) {
       setError("Error in creating voter");
     }

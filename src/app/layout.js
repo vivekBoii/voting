@@ -24,7 +24,7 @@ export default function RootLayout({ children }) {
             rel="stylesheet"
           />
         </head>
-        <body>
+        <body className="bg-purple-900">
           <Navbar />
           {children}
         </body>

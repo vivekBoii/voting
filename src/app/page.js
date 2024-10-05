@@ -16,35 +16,24 @@ export default function HomePage() {
     voterLength,
   } = useContext(VotingContext);
 
-  useEffect(() => {
-    console.log(candidateArray);
-    console.log(voterLength);
-  }, []);
-
   return (
-    <div>
-      {currentAccount && (
-        <div>
-          <div>
-            <div>
-              <p>
-                No candidate: <span>{candidateLength}</span>
-              </p>
-            </div>
-            <div>
-              <p>
-                No Voter : <span>{voterLength}</span>
-              </p>
-            </div>
+    <section className="bg-purple-900 py-8 px-4 mx-auto max-w-screen-xl lg:py-16">
+      <div className="flex items-center justify-between w-full">
+        <div className="flex space-x-4">
+          <div className="bg-pink-600 text-white border-2 border-black px-6 py-4 flex justify-between items-center w-[200px]">
+            <span className="text-sm font-bold">No Candidate:</span>
+            <span className="text-xl font-mono">{candidateLength}</span>
           </div>
-          <div>
-            <div>
-              <Countdown date={Date.now() + 100000} />
-            </div>
+          <div className="bg-pink-600 text-white border-2 border-black px-6 py-4 flex justify-between items-center w-[200px]">
+            <span className="text-sm font-bold">No Voter:</span>
+            <span className="text-xl font-mono">{voterLength}</span>
           </div>
         </div>
-      )}
+        <div className="bg-black text-white px-12 py-6 my-2 border-2 border-black rounded-lg text-3xl font-mono">
+          <Countdown date={Date.now() + 100000} />
+        </div>
+      </div>
       <Card candidateArray={candidateArray} giveVote={giveVote} />
-    </div>
+    </section>
   );
 }
