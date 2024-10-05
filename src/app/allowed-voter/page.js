@@ -1,6 +1,6 @@
 "use client";
 import { useRouter } from "next/navigation";
-import React, { useCallback, useContext, useState } from "react";
+import React, { useCallback, useContext, useState, useEffect } from "react";
 import { useDropzone } from "react-dropzone";
 import Image from "next/image";
 import { VotingContext } from "../../context/voter";
@@ -10,6 +10,7 @@ import upload from "../../public/images/upload.png";
 import creatorImg from "../../public/images/creator1.png";
 
 const allowedVoter = () => {
+  const { uploadToIpfs, createVoter, voterArray } = useContext(VotingContext);
   const [fileUrl, setFileUrl] = useState(null);
   const [formInput, setFormInput] = useState({
     name: "",
@@ -18,7 +19,6 @@ const allowedVoter = () => {
   });
 
   const router = useRouter();
-  const { uploadToIpfs, createVoter } = useContext(VotingContext);
 
   const onDrop = useCallback(async (acceptedFile) => {
     const cid = await uploadToIpfs(acceptedFile[0]);
@@ -58,21 +58,22 @@ const allowedVoter = () => {
               <p>Blockchain voting organization</p>
               <p>Contract Candidate</p>
             </div>
-            {/* <div>
+            <div>
               {voterArray &&
                 voterArray.map((el, i) => {
-                  <div key={i + 1}>
-                    <div>
-                      <img src="" alt="Profile Photo" />
+                  return (
+                    <div key={i + 1}>
+                      <div>
+                        <img src={el[4]} alt="Profile Photo" />
+                      </div>
+                      <div>
+                        <p>{el[1]}</p>
+                        <p>{el[3].slice(0,15)}..</p>
+                      </div>
                     </div>
-                    <div>
-                      <p>Name</p>
-                      <p>Address</p>
-                      <p>Details</p>
-                    </div>
-                  </div>;
+                  );
                 })}
-            </div> */}
+            </div>
           </div>
         )}
         <div>

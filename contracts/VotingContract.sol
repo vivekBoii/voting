@@ -109,29 +109,11 @@ contract VotingContract {
 
     function getCandidatedate(
         address _address
-    )
-        public
-        view
-        returns (
-            uint candidateId,
-            string memory name,
-            string memory age,
-            string memory image,
-            uint voteCount,
-            string memory ipfs
-        )
-    {
+    ) public view returns (Candidate memory) {
         Candidate storage candidate = candidates[_address];
         require(candidate._address != address(0), "Candidate does not exist");
 
-        return (
-            candidate.candidateId,
-            candidate.name,
-            candidate.age,
-            candidate.image,
-            candidate.voteCount,
-            candidate.ipfs
-        );
+        return candidate;
     }
 
     //Voter

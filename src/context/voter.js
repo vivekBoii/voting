@@ -17,15 +17,13 @@ export const VotingProvider = ({ children }) => {
   const [candidateLength, setCandidateLength] = useState(null);
   const [contract, setContract] = useState(null);
   const [helia, setHelia] = useState(null);
-  const pushCandidate = [];
-  const candidateIndex = [];
-  const [candidateArray, setCandidateArray] = useState(pushCandidate);
+  const [candidateArray, setCandidateArray] = useState([]);
+  const [candidateIndex, setCandidateIndex] = useState([]);
 
   const [error, setError] = useState(null);
   const highestVote = [];
 
-  const pushVoter = [];
-  const [voterArray, setVoterArray] = useState(pushVoter);
+  const [voterArray, setVoterArray] = useState([]);
   const [voterLength, setVoterLength] = useState(null);
   const [voterAddress, setVoterAddress] = useState(null);
 
@@ -44,6 +42,9 @@ export const VotingProvider = ({ children }) => {
       }
     };
     initHelia();
+    getAllVoterData();
+    getNewCandidate();
+    checkIfWalletIsConnected();
   }, []);
 
   // Fetch the smart contract
@@ -94,35 +95,126 @@ export const VotingProvider = ({ children }) => {
       router.push("/voterList");
     } catch (error) {
       console.log(error);
-      setError("Error in creating voter: " + error.message);
+      setError("Error in creating voter");
     }
   };
 
   const getAllVoterData = async () => {
-    if (!connected) {
-      await sdk?.connect();
+    try {
+      if (!connected) {
+        await sdk?.connect();
+      }
+
+      const provider = new ethers.BrowserProvider(window.ethereum);
+      const signer = await provider.getSigner(); // Use await here
+      const contract = fetchContract(signer);
+
+      const voterListData = await contract.getVoterList();
+      setVoterAddress(voterListData);
+      const allVoters = await Promise.all(
+        voterListData.map((add) => contract.getVoterData(add))
+      );
+
+      setVoterArray(allVoters);
+      setVoterLength(voterListData.length);
+    } catch (error) {
+      setError("Something went Wrong");
     }
-
-    const provider = new ethers.BrowserProvider(window.ethereum);
-    const signer = await provider.getSigner(); // Use await here
-    const contract = fetchContract(signer);
-
-    const voterListData = await contract.getVoterList();
-    setVoterAddress(voterListData);
-    voterListData.map(async (add) => {
-      const singleVoterData = await contract.getVoterData(add);
-      pushCandidate.push(singleVoterData);
-    });
   };
 
-  useEffect(() => {
-    getAllVoterData();
-  }, []);
+  const giveVote = async (id) => {
+    try {
+    } catch (error) {}
+  };
+
+  const setCandidate = async (candidateForm, fileUrl, router) => {
+    try {
+      const { name, address, age } = candidateForm;
+      if (!name || !address || !age) {
+        return setError("Input data is missing.");
+      }
+
+      // Connect to MetaMask
+      if (!connected) {
+        await sdk?.connect();
+      }
+
+      // Get the provider and signer using the MetaMask SDK
+      const provider = new ethers.BrowserProvider(window.ethereum);
+      const signer = await provider.getSigner(); // Use await here
+      const contract = fetchContract(signer);
+
+      // Upload file to IPFS
+      const data = JSON.stringify({ name, address, image: fileUrl, age });
+      const jsonBytes = new TextEncoder().encode(data);
+      const result = await helia.fs.addBytes(jsonBytes);
+      const url = `https://ipfs.io/ipfs/${result.toString()}`;
+      console.log(url);
+
+      const candidate = await contract.setCandidate(
+        address,
+        age,
+        name,
+        fileUrl,
+        url
+      );
+      candidate.wait();
+      console.log(candidate);
+      router.push("/");
+    } catch (error) {
+      setError("Error in creating voter");
+    }
+  };
+
+  const getNewCandidate = async () => {
+    try {
+      if (!connected) {
+        await sdk?.connect();
+      }
+
+      // Get the provider and signer using the MetaMask SDK
+      const provider = new ethers.BrowserProvider(window.ethereum);
+      const signer = await provider.getSigner(); // Use await here
+      const contract = fetchContract(signer);
+
+      const allCandidateAddresses = await contract.getCandidates();
+
+      const candidatesData = await Promise.all(
+        allCandidateAddresses.map(async (address) => {
+          const singleCandidateData = await contract.getCandidatedate(address);
+          return singleCandidateData;
+        })
+      );
+
+      setCandidateArray(candidatesData);
+      const candidateIndexes = candidatesData.map((data) => Number(data[2]));
+      setCandidateIndex(candidateIndexes);
+
+      setCandidateLength(allCandidateAddresses.length);
+    } catch (error) {
+      setError("Error while getting new candidates");
+      console.error(error); // Log the error for debugging
+    }
+  };
+
+  const checkIfWalletIsConnected = async () => {};
 
   // Context value to provide
   const contextValue = {
     uploadToIpfs,
     createVoter,
+    getAllVoterData,
+    giveVote,
+    setCandidate,
+    getNewCandidate,
+    checkIfWalletIsConnected,
+    voterArray,
+    error,
+    candidateArray,
+    voterLength,
+    voterAddress,
+    currentAccount,
+    candidateLength,
   };
 
   return (

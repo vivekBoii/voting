@@ -2,8 +2,8 @@
   "_format": "hh-sol-cache-2",
   "files": {
     "/home/Avatar/Code/voting/contracts/VotingContract.sol": {
-      "lastModificationDate": 1728078291824,
-      "contentHash": "949bd005432bf598e0fc50b72fd2b7c3",
+      "lastModificationDate": 1728125384035,
+      "contentHash": "e4aa948ccc78b7426a183339e2723460",
       "sourceName": "contracts/VotingContract.sol",
       "solcConfig": {
         "version": "0.8.27",
