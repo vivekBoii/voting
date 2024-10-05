@@ -124,7 +124,23 @@ export const VotingProvider = ({ children }) => {
 
   const giveVote = async (id) => {
     try {
-    } catch (error) {}
+      console.log(id);
+      const voterAddress = id.address;
+      const voterId = id.id;
+      if (!connected) {
+        await sdk?.connect();
+      }
+
+      const provider = new ethers.BrowserProvider(window.ethereum);
+      const signer = await provider.getSigner(); // Use await here
+      const contract = fetchContract(signer);
+
+      const voterList = await contract.vote(voterAddress, voterId);
+      console.log(voterList);
+    } catch (error) {
+      console.log(error);
+      setError(error);
+    }
   };
 
   const setCandidate = async (candidateForm, fileUrl, router) => {
@@ -193,11 +209,37 @@ export const VotingProvider = ({ children }) => {
       setCandidateLength(allCandidateAddresses.length);
     } catch (error) {
       setError("Error while getting new candidates");
-      console.error(error); // Log the error for debugging
+      console.log(error); // Log the error for debugging
     }
   };
 
-  const checkIfWalletIsConnected = async () => {};
+  const checkIfWalletIsConnected = async () => {
+    if (!window.ethereum) {
+      return setError("Please install MetaMask.");
+    }
+
+    const accounts = await window.ethereum.request({
+      method: "eth_accounts",
+    });
+
+    if (accounts.length) {
+      setCurrentAccount(accounts[0]);
+    } else {
+      setError("No wallet connected. Please connect your wallet.");
+    }
+  };
+
+  const connectWallet = async () => {
+    if (!window.ethereum) {
+      return setError("Please install MetaMask.");
+    }
+
+    const accounts = await window.ethereum.request({
+      method: "eth_accounts",
+    });
+
+    setCurrentAccount(accounts[0]);
+  };
 
   // Context value to provide
   const contextValue = {
@@ -208,6 +250,7 @@ export const VotingProvider = ({ children }) => {
     setCandidate,
     getNewCandidate,
     checkIfWalletIsConnected,
+    connectWallet,
     voterArray,
     error,
     candidateArray,

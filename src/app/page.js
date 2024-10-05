@@ -23,7 +23,7 @@ export default function HomePage() {
 
   return (
     <div>
-      {!currentAccount && (
+      {currentAccount && (
         <div>
           <div>
             <div>

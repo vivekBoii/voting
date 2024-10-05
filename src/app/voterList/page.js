@@ -1,9 +1,20 @@
-import React from 'react'
+"use client";
+import React, { useEffect , useContext } from "react";
+import VoterCard from "../../components/VoterCard/VoterCard";
+import { VotingContext } from "../../context/voter";
 
 const VoterList = () => {
-  return (
-    <div>VoterList</div>
-  )
-}
+  const { getAllVoterData, voterArray } = useContext(VotingContext);
 
-export default VoterList
+  useEffect(() => {
+    getAllVoterData();
+  }, []);
+
+  return (
+    <div>
+      <VoterCard voterArray={voterArray} />
+    </div>
+  );
+};
+
+export default VoterList;
