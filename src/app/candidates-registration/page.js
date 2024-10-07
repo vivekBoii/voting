@@ -108,7 +108,7 @@ const candidatesRegistration = () => {
           </div>
           <div className="flex-1 bg-pink-600 p-6 m-4 rounded-lg shadow-lg text-white">
             <h1 className="text-3xl font-bold mb-4 text-center">
-              Create New Voter
+              Create New Candidate
             </h1>
 
             <div className="mb-6">

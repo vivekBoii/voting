@@ -1,10 +1,7 @@
 "use client";
 import React, { useContext, useState } from "react";
-import Image from "next/image";
 import Link from "next/link";
-import { AiFillLock, AiFillUnlock } from "react-icons/ai";
 import { VotingContext } from "../../context/voter";
-import loading from "../../public/loading-waiting.gif";
 
 const Navbar = () => {
   const { connectWallet, error, currentAccount } = useContext(VotingContext);

@@ -2,6 +2,8 @@ import "./globals.css";
 
 import { VotingProvider } from "../context/voter"; // Import VotingProvider, not VotingContext
 import Navbar from "../components/Navbar/Navbar";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export const metadata = {
   title: "Voting Application",
@@ -25,6 +27,7 @@ export default function RootLayout({ children }) {
           />
         </head>
         <body className="bg-purple-900">
+          <ToastContainer />
           <Navbar />
           {children}
         </body>

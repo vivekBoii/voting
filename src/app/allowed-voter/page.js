@@ -151,8 +151,8 @@ const allowedVoter = () => {
               />
               <Input
                 inputType="text"
-                title="Position"
-                placeholder="Voter Position"
+                title="Aadhar Card"
+                placeholder="Aadhar Card"
                 handleClick={(e) =>
                   setFormInput({ ...formInput, position: e.target.value })
                 }

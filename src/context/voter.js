@@ -8,6 +8,7 @@ import { fileToUint8Array } from "./heliaHelper";
 import { unixfs } from "@helia/unixfs";
 import { MemoryBlockstore } from "blockstore-core";
 import { MetaMaskProvider, useSDK } from "@metamask/sdk-react";
+import { toast } from "react-toastify";
 
 export const VotingContext = React.createContext();
 
@@ -94,7 +95,7 @@ export const VotingProvider = ({ children }) => {
       console.log(voter);
       window.location.href = "/voterList";
     } catch (error) {
-      console.log(error);
+      toast.error("Only Admin Account is Allowed");
       setError("Error in creating voter");
     }
   };
@@ -136,9 +137,10 @@ export const VotingProvider = ({ children }) => {
       const contract = fetchContract(signer);
 
       const voterList = await contract.vote(voterAddress, voterId);
-      window.location.href = "/";
+      window.location.href = "/loading";
     } catch (error) {
       console.log(error);
+      toast.error("You have already voted");
       setError(error);
     }
   };
@@ -178,6 +180,7 @@ export const VotingProvider = ({ children }) => {
       console.log(candidate);
       window.location.href = "/";
     } catch (error) {
+      toast.error("Only Admin Account is Allowed");
       setError("Error in creating voter");
     }
   };
