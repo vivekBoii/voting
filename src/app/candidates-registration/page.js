@@ -17,6 +17,9 @@ const candidatesRegistration = () => {
     name: "",
     address: "",
     age: "",
+    party:"",
+    district:"",
+    state:"",
   });
 
   const router = useRouter();
@@ -160,6 +163,30 @@ const candidatesRegistration = () => {
                   setCandidateForm({ ...candidateForm, age: e.target.value })
                 }
               />
+              <Input
+                inputType="text"
+                title="Party Name"
+                placeholder="NOTA , BJP , INC etc."
+                handleClick={(e) =>
+                  setCandidateForm({ ...candidateForm, party: e.target.value })
+                }
+              />
+              <Input
+                inputType="text"
+                title="District"
+                placeholder="Candidate District from which he wants to stand"
+                handleClick={(e) =>
+                  setCandidateForm({ ...candidateForm, district: e.target.value })
+                }
+              />
+              <Input
+              inputType="text"
+              title="State"
+              placeholder="Candidate state from which he wants to stand"
+              handleClick={(e) =>
+                setCandidateForm({ ...candidateForm, state: e.target.value })
+              }
+            />
               <div className="text-center">
                 <Button
                   btnName="Authorize Candidate"

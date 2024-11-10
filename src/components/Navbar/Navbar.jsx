@@ -79,6 +79,14 @@ const Navbar = () => {
                     Voter List
                   </Link>
                 </li>
+                <li onClick={() => openNavigation()}>
+                  <Link
+                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-pink-100"
+                    href={{ pathname: "result" }}
+                  >
+                    Result
+                  </Link>
+                </li>
               </ul>
             </div>
           </div>

@@ -3,7 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "flask-dev": "FLASK_DEBUG=1 pip3 install -r requirements.txt && python3 -m flask --app api/index run -p 5328",
+    "next-dev": "next dev",
+    "dev": "concurrently \"npm run next-dev\" \"pnpm run flask-dev\"",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
@@ -14,10 +16,12 @@
     "@openzeppelin/contracts": "^4.9.3",
     "axios": "^1.7.7",
     "blockstore-core": "^5.0.2",
+    "chart.js": "^4.4.6",
     "ethers": "^6.13.3",
     "helia": "^4.2.6",
     "next": "14.2.13",
     "react": "^18",
+    "react-chartjs-2": "^5.2.0",
     "react-countdown": "^2.3.6",
     "react-dom": "^18.3.1",
     "react-dropzone": "^14.2.3",
@@ -26,6 +30,7 @@
   },
   "devDependencies": {
     "@nomicfoundation/hardhat-toolbox": "^5.0.0",
+    "concurrently": "^9.1.0",
     "eslint": "^8",
     "eslint-config-next": "14.2.13",
     "hardhat": "^2.22.12",

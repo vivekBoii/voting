@@ -30,7 +30,7 @@ export default function HomePage() {
           </div>
         </div>
         <div className="bg-black text-white px-12 py-6 my-2 border-2 border-black rounded-lg text-3xl font-mono">
-          <Countdown date={Date.now() + 100000} />
+          <Countdown date={Date.now() + 20000000} />
         </div>
       </div>
       <Card candidateArray={candidateArray} giveVote={giveVote} />
